@@ -634,7 +634,7 @@ class Printer(object):
                 logging.error("Error response from Cloud Print for type %s: %s" %
                                  (jobtype, responseobj['message']))
                 sys.stderr.write("ERROR: Error response from Cloud Print for type %s: %s\n" %
-                                 (jobtype, responseobj['message']))
+                                 (jobtype, responseobj['message'].encode('utf8')))
                 return False
 
         except Exception as error_msg:
