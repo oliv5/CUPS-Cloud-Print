@@ -173,12 +173,15 @@ if __name__ == '__main__':  # pragma: no cover
         printer=printer_manager.getPrinterByURI(uri)
         if printer is None:
             sys.stderr.write("ERROR: PrinterManager '%s' not found\n" % uri)
+            logging.error("PrinterManager '%s' not found" % uri)
             result=1
         elif printer.submitJob('pdf', printFile, filedata, jobTitle, cupsprintername, printOptions):
             sys.stderr.write("INFO: Successfully printed\n")
+            logging.info("Successfully printed")
             result=0
         else:
             sys.stderr.write("ERROR: Failed to submit job to cloud print\n")
+            logging.error("Failed to submit job to cloud print")
             result=1
 
         logging.info(str(printFile) + " sent to cloud print")

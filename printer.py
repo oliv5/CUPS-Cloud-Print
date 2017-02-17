@@ -631,6 +631,8 @@ class Printer(object):
             if responseobj['success']:
                 return True
             else:
+                logging.error("Error response from Cloud Print for type %s: %s" %
+                                 (jobtype, responseobj['message']))
                 sys.stderr.write("ERROR: Error response from Cloud Print for type %s: %s\n" %
                                  (jobtype, responseobj['message']))
                 return False
