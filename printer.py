@@ -553,9 +553,15 @@ class Printer(object):
                 overridecapabilities[capability] = overrideDefaultDefaults[capability]
         attrs = cups.PPD(connection.getPPD(cupsprintername)).attributes
         attrArray = self._attrListToArray(attrs)
-        return self._getCapabilitiesDict(attrArray,
-                                         self['capabilities']['printer'],
-                                         overridecapabilities)
+        # See https://github.com/simoncadman/CUPS-Cloud-Print/issues/114
+        result = self._getCapabilitiesDict(attrArray,
+                                          self['capabilities']['printer'],
+                                          overridecapabilities)
+        result['print']['media_size'].pop('custom_display_name_localized', None)
+        return result
+#        return self._getCapabilitiesDict(attrArray,
+#                                         self['capabilities']['printer'],
+#                                         overridecapabilities)
 
     def submitJob(self, jobtype, jobfile, jobdata, jobname, cupsprintername, options=""):
         """Submits a job to printerid with content of dataUrl.
